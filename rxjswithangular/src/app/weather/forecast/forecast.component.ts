@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ForecastService } from '../forecast.service';
+import { Observable } from 'rxjs';
 
 interface ForecastData {
   dateString: string,
@@ -11,13 +12,10 @@ interface ForecastData {
   styleUrls: ['./forecast.component.css']
 })
 export class ForecastComponent implements OnInit {
-  forecastData: ForecastData[] = []
+  forecast$: Observable<ForecastData[]>
 
   constructor(private forecastService: ForecastService) {
-    forecastService.getForecast()
-      .subscribe((forecastData) => {
-        this.forecastData = forecastData
-      })
+    this.forecast$ = forecastService.getForecast()
   }
 
   ngOnInit(): void {
