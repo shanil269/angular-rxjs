@@ -24,14 +24,11 @@ export class ForecastService {
     return this.getCurrentLocation()
       .pipe(
         map(coords => {
-          console.log(coords.latitude)
-          console.log(coords.longitude)
           return new HttpParams()
             .set('lat', coords.latitude)
             .set('lon', coords.longitude)
             .set('appid', '1d8aaf55e6c3d2604e2485fd2296570e') // openweathermap
             // .set('q', coords.latitude).append('q', coords.longitude)
-
             .set('units', 'metric')
         }),
         switchMap(params => this.http.get<OpenWeatherResponse>(this.url, { params })),
